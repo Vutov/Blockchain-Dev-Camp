@@ -21,10 +21,12 @@ namespace BitcoinWallet
                     line = Console.ReadLine();
                 } while (operations.Any(o => line.ToLower() == o) == false);
 
+                string walletName;
+                string password;
+                string address;
                 switch (line.ToLower())
                 {
                     case "create":
-                        string password;
                         string confirmPassword;
                         do
                         {
@@ -34,7 +36,6 @@ namespace BitcoinWallet
                             confirmPassword = Console.ReadLine();
                         } while (password != confirmPassword);
 
-                        string walletName;
                         do
                         {
                             Console.WriteLine("Enter waller name:");
@@ -53,6 +54,34 @@ namespace BitcoinWallet
                         Console.Write("Enter date (yyyy-MM-dd): ");
                         string date = Console.ReadLine();
                         waller.Recover(passowrd, mnemonic, date);
+                        break;
+                    case "recieve":
+                        Console.WriteLine("Enter wallet's name: ");
+                        walletName = Console.ReadLine();
+                        Console.WriteLine("Enter password: ");
+                        password = Console.ReadLine();
+                        waller.Recieve(walletName, password);
+                        break;
+                    case "balance":
+                        Console.WriteLine("Enter balance address: ");
+                        address = Console.ReadLine();
+                        waller.ShowBalance(address);
+                        break;
+                    case "history":
+                        Console.WriteLine("Enter balance address: ");
+                        address = Console.ReadLine();
+                        waller.ShowHistory(address);
+                        break;
+                    case "send":
+                        Console.WriteLine("Enter wallet's name: ");
+                        walletName = Console.ReadLine();
+                        Console.WriteLine("Enter password: ");
+                        password = Console.ReadLine();
+                        Console.WriteLine("Enter balance address: ");
+                        address = Console.ReadLine();
+                        Console.WriteLine("TransactionID: ");
+                        var outPoint = Console.ReadLine();
+                        waller.Send(password, walletName, address, outPoint);
                         break;
                 }
             }
